@@ -20,33 +20,37 @@ let display = document.getElementById('display')
 let firstNo;
 let secondNo;
 let operator;
+
 let operateSwitch = false;
-let displayAfterOperator = false;
+let equalSwitch = false;
+//let displayAfterOperator = false;
 
 divide.addEventListener('click', () => {
-    if (!operateSwitch) {
-        operator = '/';
-        firstNo = +display.textContent;
-        operateSwitch = true;
-        displayAfterOperator = true;
-    }
+    operateSelector('/');
 })
 multi.addEventListener('click', () => {
-    operator = '*'
-    displayAfterOperator = true;
+    operateSelector('*');
 })
 minus.addEventListener('click', () => {
-    operator = '-'
-    displayAfterOperator = true;
+    operateSelector('-');
 })
 plus.addEventListener('click', () => {
-    operator = '+'
-    displayAfterOperator = true;
+    operateSelector('+');
 })
 equ.addEventListener('click', () => {
-    secondNo = +display.textContent;
-    if (operator === '/') {
-        display.textContent = firstNo / secondNo;
+    if (!equalSwitch) {
+        equalSwitch = true;
+        operateSwitch = false;
+        secondNo = +display.textContent;
+        if (operator === '/') {
+            display.textContent = firstNo / secondNo;
+        } else if (operator === '*') {
+            display.textContent = firstNo * secondNo;
+        } else if (operator === '-') {
+            display.textContent = firstNo - secondNo;
+        } else if (operator === '+') {
+            display.textContent = firstNo + secondNo;
+        }
     }
 })
 clear.addEventListener('click', () => {
@@ -88,10 +92,8 @@ z0.addEventListener('click', () => {
             display.textContent = display.textContent + '0';
         }
     } else {
-        if (displayAfterOperator) {
-            display.textContent = '0';
-            displayAfterOperator = false;
-        } else display.textContent = display.textContent + '0';
+        display.textContent = '0';
+        operateSwitch = false;
     }
 });
 
@@ -103,26 +105,59 @@ function addDigits(no) {
             display.textContent = display.textContent + no;
         }
     } else {
-        if (displayAfterOperator) {
-            display.textContent = no;
-            displayAfterOperator = false;
-        } else display.textContent = display.textContent + no;
+        display.textContent = no;
+        operateSwitch = false;
+    }   
+}
+function operateSelector(x) {
+    if (!operateSwitch) {
+        equalSwitch = false;
+        operator = x;
+        firstNo = +display.textContent;        
+        operateSwitch = true;        
+        displayAfterOperator = true;        
     }
 }
-
-
-// () => {
-//     if (display.textContent === '0' || display.textContent === 'CASIO') {
-//         display.textContent = '3';
-//     } else {
-//         display.textContent = display.textContent + '3';
-//     }
-// })
 // function addDigits(no) {
-//     if (display.textContent === '0' || display.textContent === 'CASIO') {
-//         display.textContent = no;
-//         console.log(no);
+//     if (!operateSwitch) {
+//         if (display.textContent === '0' || display.textContent === 'CASIO') {
+//             display.textContent = no;            
+//         } else {
+//             display.textContent = display.textContent + no;
+//         }
 //     } else {
-//         display.textContent = display.textContent + no;
+//         if (displayAfterOperator) {
+//             display.textContent = no;
+//             displayAfterOperator = false;
+//         } else display.textContent = display.textContent + no;
+//     }
+//}
+// z0.addEventListener('click', () => {
+//     console.log('0')
+//     if (!operateSwitch) {
+//         if (display.textContent === '0' || display.textContent === 'CASIO') {
+//             display.textContent = '0';
+//         } else {
+//             display.textContent = display.textContent + '0';
+//         }
+//     } else {
+//         if (displayAfterOperator) {
+//             display.textContent = '0';
+//             displayAfterOperator = false;
+//         } else display.textContent = display.textContent + '0';
+//     }
+// });
+// if (!equalSwitch) {
+//     equalSwitch = true;
+//     operateSwitch = false;
+//     secondNo = +display.textContent;
+//     if (operator === '/') {
+//         display.textContent = firstNo / secondNo;
+//     } else if (operator === '*') {
+//         display.textContent = firstNo * secondNo;
+//     } else if (operator === '-') {
+//         display.textContent = firstNo - secondNo;
+//     } else if (operator === '+') {
+//         display.textContent = firstNo + secondNo;
 //     }
 // }
