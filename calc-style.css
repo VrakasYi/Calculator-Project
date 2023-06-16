@@ -2,14 +2,14 @@ body {
     display:flex;
     justify-content: center;
     padding-top: 100px;
-    background-color: rgb(206, 154, 154);
+    background-color: rgba(130, 123, 226, 0.486);
 }
 
 #calc {
     border: black solid 2px;
     border-radius: 4px;
     padding: 12px;
-    background-color: rgb(177, 97, 39);
+    background-color: rgb(146, 122, 107);
     font-size: small;
 }
 

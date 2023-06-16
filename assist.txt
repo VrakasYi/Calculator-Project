@@ -124,3 +124,48 @@ function addDigits(no) {
 //         display.textContent = display.textContent + no;
 //     }
 // }
+
+
+// function addDigits(no) {
+//     if (!operateSwitch) {
+//         if (display.textContent === '0' || display.textContent === 'CASIO') {
+//             display.textContent = no;            
+//         } else {
+//             display.textContent = display.textContent + no;
+//         }
+//     } else {
+//         if (displayAfterOperator) {
+//             display.textContent = no;
+//             displayAfterOperator = false;
+//         } else display.textContent = display.textContent + no;
+//     }
+//}
+// z0.addEventListener('click', () => {
+//     console.log('0')
+//     if (!operateSwitch) {
+//         if (display.textContent === '0' || display.textContent === 'CASIO') {
+//             display.textContent = '0';
+//         } else {
+//             display.textContent = display.textContent + '0';
+//         }
+//     } else {
+//         if (displayAfterOperator) {
+//             display.textContent = '0';
+//             displayAfterOperator = false;
+//         } else display.textContent = display.textContent + '0';
+//     }
+// });
+// if (!equalSwitch) {
+//     equalSwitch = true;
+//     operateSwitch = false;
+//     secondNo = +display.textContent;
+//     if (operator === '/') {
+//         display.textContent = firstNo / secondNo;
+//     } else if (operator === '*') {
+//         display.textContent = firstNo * secondNo;
+//     } else if (operator === '-') {
+//         display.textContent = firstNo - secondNo;
+//     } else if (operator === '+') {
+//         display.textContent = firstNo + secondNo;
+//     }
+// }

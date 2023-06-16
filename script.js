@@ -17,13 +17,21 @@ const dot = document.querySelector('#dot');
 const equ = document.querySelector('#equ');
 const plus = document.querySelector('#plus');
 let display = document.getElementById('display')
+let operatorBlinker = document.getElementById('operatorBlinker');
 let firstNo;
+console.log(firstNo);
 let secondNo;
 let operator;
 
 let operateSwitch = false;
 let equalSwitch = false;
 //let displayAfterOperator = false;
+del.addEventListener('click', () => {
+    display.textContent = display.textContent.slice(0,-1);
+    if (display.textContent === '') {
+        display.textContent = '0';
+    }
+})
 
 divide.addEventListener('click', () => {
     operateSelector('/');
@@ -38,20 +46,7 @@ plus.addEventListener('click', () => {
     operateSelector('+');
 })
 equ.addEventListener('click', () => {
-    if (!equalSwitch) {
-        equalSwitch = true;
-        operateSwitch = false;
-        secondNo = +display.textContent;
-        if (operator === '/') {
-            display.textContent = firstNo / secondNo;
-        } else if (operator === '*') {
-            display.textContent = firstNo * secondNo;
-        } else if (operator === '-') {
-            display.textContent = firstNo - secondNo;
-        } else if (operator === '+') {
-            display.textContent = firstNo + secondNo;
-        }
-    }
+    operateEqual();
 })
 clear.addEventListener('click', () => {
     display.textContent = '0';
@@ -106,58 +101,41 @@ function addDigits(no) {
         }
     } else {
         display.textContent = no;
+        secondNo = +display.textContent;
         operateSwitch = false;
     }   
 }
 function operateSelector(x) {
     if (!operateSwitch) {
-        equalSwitch = false;
+        if (firstNo === undefined) {
+            firstNo = +display.textContent;       
+            operateSwitch = true;        
+        } else if (secondNo === undefined) {
+            secondNo = +display.textContent;
+            operateSwitch = true;
+        } else operateEqual();
         operator = x;
-        firstNo = +display.textContent;        
-        operateSwitch = true;        
-        displayAfterOperator = true;        
+    } else operator = x;
+}
+function operateEqual() {
+    if (firstNo !== undefined && secondNo !== undefined) {
+        secondNo = +display.textContent;
+        operate();
+        firstNo = +display.textContent;
+        secondNo = undefined;
+        operator = undefined;      
+    }
+    operateSwitch = true;
+}
+
+function operate() {
+    if (operator === '/') {
+        display.textContent = (firstNo / secondNo).toFixed(2);
+    } else if (operator === '*') {
+        display.textContent = firstNo * secondNo;
+    } else if (operator === '-') {
+        display.textContent = firstNo - secondNo;
+    } else if (operator === '+') {
+        display.textContent = firstNo + secondNo;
     }
 }
-// function addDigits(no) {
-//     if (!operateSwitch) {
-//         if (display.textContent === '0' || display.textContent === 'CASIO') {
-//             display.textContent = no;            
-//         } else {
-//             display.textContent = display.textContent + no;
-//         }
-//     } else {
-//         if (displayAfterOperator) {
-//             display.textContent = no;
-//             displayAfterOperator = false;
-//         } else display.textContent = display.textContent + no;
-//     }
-//}
-// z0.addEventListener('click', () => {
-//     console.log('0')
-//     if (!operateSwitch) {
-//         if (display.textContent === '0' || display.textContent === 'CASIO') {
-//             display.textContent = '0';
-//         } else {
-//             display.textContent = display.textContent + '0';
-//         }
-//     } else {
-//         if (displayAfterOperator) {
-//             display.textContent = '0';
-//             displayAfterOperator = false;
-//         } else display.textContent = display.textContent + '0';
-//     }
-// });
-// if (!equalSwitch) {
-//     equalSwitch = true;
-//     operateSwitch = false;
-//     secondNo = +display.textContent;
-//     if (operator === '/') {
-//         display.textContent = firstNo / secondNo;
-//     } else if (operator === '*') {
-//         display.textContent = firstNo * secondNo;
-//     } else if (operator === '-') {
-//         display.textContent = firstNo - secondNo;
-//     } else if (operator === '+') {
-//         display.textContent = firstNo + secondNo;
-//     }
-// }
