@@ -18,14 +18,13 @@ const equ = document.querySelector('#equ');
 const plus = document.querySelector('#plus');
 let display = document.getElementById('display')
 let operatorBlinker = document.getElementById('operatorBlinker');
+
 let firstNo;
-console.log(firstNo);
 let secondNo;
 let operator;
 
 let operateSwitch = false;
-let equalSwitch = false;
-//let displayAfterOperator = false;
+
 del.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0,-1);
     if (display.textContent === '') {
@@ -33,52 +32,53 @@ del.addEventListener('click', () => {
     }
 })
 
-divide.addEventListener('click', () => {
+divide.addEventListener('mousedown', () => {
     operateSelector('/');
+    divide.classList.remove('wait');
 })
-multi.addEventListener('click', () => {
+buttonRelease(divide)
+multi.addEventListener('mousedown', () => {
     operateSelector('*');
+    multi.classList.remove('wait');
 })
-minus.addEventListener('click', () => {
+buttonRelease(multi)
+minus.addEventListener('mousedown', () => {
     operateSelector('-');
+    minus.classList.remove('wait');
 })
-plus.addEventListener('click', () => {
+buttonRelease(minus)
+plus.addEventListener('mousedown', () => {
     operateSelector('+');
+    plus.classList.remove('wait');
 })
-equ.addEventListener('click', () => {
+buttonRelease(plus)
+equ.addEventListener('mousedown', () => {
     operateEqual();
+    equ.classList.remove('wait');
 })
-clear.addEventListener('click', () => {
+buttonRelease(equ)
+clear.addEventListener('mousedown', () => {
     display.textContent = '0';
+    clear.classList.remove('wait');
+    secondNo = undefined;
+    operator = undefined;
+    firstNo = undefined;
+    operateSwitch = false;
 })
-s7.addEventListener('click', () => {
-    addDigits('7');
-});
-e8.addEventListener('click', () => {
-    addDigits('8');
-});
-n9.addEventListener('click', () => {
-    addDigits('9');
-});
-f4.addEventListener('click', () => {
-    addDigits('4');
-});
-f5.addEventListener('click', () => {
-    addDigits('5');
-});
-s6.addEventListener('click', () => {
-    addDigits('6');
-});
-o1.addEventListener('click', () => {
-     addDigits('1');
-});
-t2.addEventListener('click', () => {
-    addDigits('2');
-});
-t3.addEventListener('click', () => {
-    addDigits('3');
-});
-z0.addEventListener('click', () => {
+buttonRelease(clear)
+
+buttonBehavior(o1, '1');
+buttonBehavior(t2, '2');
+buttonBehavior(t3, '3');
+buttonBehavior(f4, '4');
+buttonBehavior(f5, '5');
+buttonBehavior(s6, '6');
+buttonBehavior(s7, '7');
+buttonBehavior(e8, '8');
+buttonBehavior(n9, '9');
+
+z0.addEventListener('mousedown', () => {
+    z0.classList.remove('wait');
     console.log('0')
     if (!operateSwitch) {
         if (display.textContent === '0' || display.textContent === 'CASIO') {
@@ -91,6 +91,9 @@ z0.addEventListener('click', () => {
         operateSwitch = false;
     }
 });
+z0.addEventListener('mouseup', () => {
+    z0.classList.add('wait');
+})
 
 function addDigits(no) {
     if (!operateSwitch) {
@@ -115,6 +118,12 @@ function operateSelector(x) {
             operateSwitch = true;
         } else operateEqual();
         operator = x;
+        if (operator === '-') {
+            if (display.textContent === '0' || display.textContent === 'CASIO') {
+                display.textContent = '-';
+                firstNo = '0'
+            }
+        }
     } else operator = x;
 }
 function operateEqual() {
@@ -123,19 +132,34 @@ function operateEqual() {
         operate();
         firstNo = +display.textContent;
         secondNo = undefined;
-        operator = undefined;      
+        operator = undefined;
     }
     operateSwitch = true;
 }
 
 function operate() {
     if (operator === '/') {
-        display.textContent = (firstNo / secondNo).toFixed(2);
+        let divisionResult = (firstNo / secondNo).toString();
+        if (divisionResult.includes('.')) {
+            display.textContent = (firstNo / secondNo).toFixed(2);
+        } else display.textContent = (firstNo / secondNo);
     } else if (operator === '*') {
         display.textContent = firstNo * secondNo;
     } else if (operator === '-') {
-        display.textContent = firstNo - secondNo;
+         display.textContent = firstNo - secondNo;
     } else if (operator === '+') {
         display.textContent = firstNo + secondNo;
     }
+}
+function buttonBehavior(buttonID, digit) {
+    buttonID.addEventListener('mousedown', () => {
+        addDigits(digit);
+        buttonID.classList.remove('wait');
+    });
+    buttonRelease(buttonID)
+}
+function buttonRelease(buttonID) {
+    buttonID.addEventListener('mouseup', () => {
+        buttonID.classList.add('wait');
+    })
 }

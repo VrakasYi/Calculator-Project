@@ -69,11 +69,11 @@ body {
 }
 
 .button:hover {
-    background-color: rgb(247, 142, 142);
+    background-color: rgb(247, 181, 142);
 }
 .dot:hover {
-    background-color: rgb(247, 142, 142);
+    background-color: rgb(247, 181, 142);
 }
 .buttonBig:hover {
-    background-color: rgb(247, 142, 142);
+    background-color: rgb(247, 181, 142);
 }
