@@ -18,11 +18,27 @@ const equ = document.querySelector('#equ');
 const plus = document.querySelector('#plus');
 let display = document.getElementById('display')
 
+let result;
 let firstNo;
 let secondNo;
 let operator;
-
 let operateSwitch = false;
+
+dot.addEventListener('mousedown', () => {
+    if (!operateSwitch) {
+        if (!display.textContent.includes('.')) {
+            if (display.textContent === 'CASIO') {
+                display.textContent = '0.'
+            } else display.textContent += '.';
+        }
+    } else {
+        console.log('yes')
+        display.textContent = '0.'
+        secondNo = display.textContent;
+        console.log(secondNo);      
+        operateSwitch = false;
+    }
+})
 
 del.addEventListener('mousedown', () => {
     del.classList.remove('wait');
@@ -134,6 +150,8 @@ function operateSelector(x) {
     } else operator = x;
 }
 function operateEqual() {
+    console.log(firstNo)
+    console.log(secondNo)
     if (firstNo !== undefined && secondNo !== undefined) {
         secondNo = +display.textContent;
         operate();
@@ -145,6 +163,8 @@ function operateEqual() {
 }
 
 function operate() {
+    console.log(firstNo)
+    console.log(secondNo)
     if (operator === '/') {
         if (firstNo === 0) {
             display.textContent = 'THAT IS NOT OK'
@@ -153,19 +173,27 @@ function operate() {
             firstNo = undefined;
             operateSwitch = false;
         } else {
-            let divisionResult = (firstNo / secondNo).toString();
-            if (divisionResult.includes('.')) {
-                display.textContent = (firstNo / secondNo).toFixed(2);
-            } else display.textContent = (firstNo / secondNo);
+            result = (firstNo / secondNo);
+            accountForDot(result);
         }
     } else if (operator === '*') {
-        display.textContent = firstNo * secondNo;
+        result = (firstNo * secondNo);
+        accountForDot(result);
     } else if (operator === '-') {
-         display.textContent = firstNo - secondNo;
+        result = firstNo - secondNo;
+        accountForDot(result);
     } else if (operator === '+') {
-        display.textContent = firstNo + secondNo;
+        result = firstNo + secondNo;
+        accountForDot(result);
     }
 }
+
+function accountForDot(result) {
+    if (result.toString().includes('.')) {
+        display.textContent = result.toFixed(2);
+    } else display.textContent = result;
+}
+
 function buttonBehavior(buttonID, digit) {
     buttonID.addEventListener('mousedown', () => {
         addDigits(digit);

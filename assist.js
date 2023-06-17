@@ -1,30 +1,58 @@
+function operate() {
+    if (operator === '/') {
+        if (firstNo === 0) {
+            display.textContent = 'THAT IS NOT OK'
+            secondNo = undefined;
+            operator = undefined;
+            firstNo = undefined;
+            operateSwitch = false;
+        } else {
+            result = (firstNo / secondNo).toString();
+            accountForDot(result);
+        }
+    } else if (operator === '*') {
+        result = (firstNo * secondNo).toString();
+        accountForDot(result);
+    } else if (operator === '-') {
+        result.textContent = firstNo - secondNo;
+        accountForDot(result);
+    } else if (operator === '+') {
+        result.textContent = firstNo + secondNo;
+        accountForDot(result);
+    }
+}
 
-divide.addEventListener('mousedown', () => {
-    operateSelector('/');
-    divide.classList.remove('wait');
-})
-buttonRelease(divide)
-multi.addEventListener('mousedown', () => {
-    operateSelector('*');
-    multi.classList.remove('wait');
-})
-buttonRelease(multi)
-minus.addEventListener('mousedown', () => {
-    operateSelector('-');
-    minus.classList.remove('wait');
-})
-buttonRelease(minus)
-plus.addEventListener('mousedown', () => {
-    operateSelector('+');
-    plus.classList.remove('wait');
-})
-buttonRelease(plus)
-equ.addEventListener('mousedown', () => {
-    operateEqual();
-    equ.classList.remove('wait');
-})
-buttonRelease(equ)
-clear.addEventListener('mousedown', () => {
-    display.textContent = '0';
-    clear.classList.remove('wait');
-})
+function accountForDot(result) {
+    if (result.toString().includes('.')) {
+        display.textContent = result.toFixed(2);
+    } else display.textContent = result;
+}
+
+
+
+function operate() {
+    if (operator === '/') {
+        if (firstNo === 0) {
+            display.textContent = 'THAT IS NOT OK'
+            secondNo = undefined;
+            operator = undefined;
+            firstNo = undefined;
+            operateSwitch = false;
+        } else {
+            result = (firstNo / secondNo).toString();
+            if (result.includes('.')) {
+                display.textContent = (firstNo / secondNo).toFixed(2);
+            } else display.textContent = (firstNo / secondNo);
+        }
+    } else if (operator === '*') {
+        result = (firstNo * secondNo).toString();
+        if (result.includes('.')) {
+            display.textContent = (firstNo * secondNo).toFixed(2);
+        }
+        display.textContent = (firstNo * secondNo)
+    } else if (operator === '-') {
+         display.textContent = firstNo - secondNo;
+    } else if (operator === '+') {
+        display.textContent = firstNo + secondNo;
+    }
+}
