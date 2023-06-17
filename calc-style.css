@@ -68,12 +68,19 @@ body {
     transition-duration: 0.3s;
 }
 
-.button:hover {
+.button:hover, .dot:hover, .buttonBig:hover {
     background-color: rgb(247, 181, 142);
 }
-.dot:hover {
-    background-color: rgb(247, 181, 142);
+
+#minus, #plus, #multi, #divide, #equ{
+    background-color: rgba(202, 159, 159, 0.911);
+    color: rgb(105, 14, 14);
 }
-.buttonBig:hover {
+#clear, #del {
+    color: brown;
+}
+#minus:hover, #plus:hover, #multi:hover, 
+#divide:hover, #equ:hover, #clear:hover, 
+#del:hover {
     background-color: rgb(247, 181, 142);
 }

@@ -17,7 +17,6 @@ const dot = document.querySelector('#dot');
 const equ = document.querySelector('#equ');
 const plus = document.querySelector('#plus');
 let display = document.getElementById('display')
-let operatorBlinker = document.getElementById('operatorBlinker');
 
 let firstNo;
 let secondNo;
@@ -25,38 +24,46 @@ let operator;
 
 let operateSwitch = false;
 
-del.addEventListener('click', () => {
-    display.textContent = display.textContent.slice(0,-1);
-    if (display.textContent === '') {
+del.addEventListener('mousedown', () => {
+    del.classList.remove('wait');
+    if (display.textContent === '0' || display.textContent === 'CASIO' || display.textContent ==='0') {
         display.textContent = '0';
+    } else {
+        display.textContent = display.textContent.slice(0,-1);
     }
 })
+buttonRelease(del)
 
 divide.addEventListener('mousedown', () => {
     operateSelector('/');
     divide.classList.remove('wait');
 })
 buttonRelease(divide)
+
 multi.addEventListener('mousedown', () => {
     operateSelector('*');
     multi.classList.remove('wait');
 })
 buttonRelease(multi)
+
 minus.addEventListener('mousedown', () => {
     operateSelector('-');
     minus.classList.remove('wait');
 })
 buttonRelease(minus)
+
 plus.addEventListener('mousedown', () => {
     operateSelector('+');
     plus.classList.remove('wait');
 })
 buttonRelease(plus)
+
 equ.addEventListener('mousedown', () => {
     operateEqual();
     equ.classList.remove('wait');
 })
 buttonRelease(equ)
+
 clear.addEventListener('mousedown', () => {
     display.textContent = '0';
     clear.classList.remove('wait');
@@ -139,10 +146,18 @@ function operateEqual() {
 
 function operate() {
     if (operator === '/') {
-        let divisionResult = (firstNo / secondNo).toString();
-        if (divisionResult.includes('.')) {
-            display.textContent = (firstNo / secondNo).toFixed(2);
-        } else display.textContent = (firstNo / secondNo);
+        if (firstNo === 0) {
+            display.textContent = 'THAT IS NOT OK'
+            secondNo = undefined;
+            operator = undefined;
+            firstNo = undefined;
+            operateSwitch = false;
+        } else {
+            let divisionResult = (firstNo / secondNo).toString();
+            if (divisionResult.includes('.')) {
+                display.textContent = (firstNo / secondNo).toFixed(2);
+            } else display.textContent = (firstNo / secondNo);
+        }
     } else if (operator === '*') {
         display.textContent = firstNo * secondNo;
     } else if (operator === '-') {
